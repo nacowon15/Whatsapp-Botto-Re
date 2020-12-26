@@ -9,7 +9,7 @@ module.exports = welcome = async (client, event) => {
   		if (event.action == 'add' && isWel) {
   			const det = await client.getChatById(event.chat)
   			const person = await client.getContact(event.who)
-  			await client.sendTextWithMentions(event.chat, `Welcome to *${det.contact.formattedName}!* \n\n@${event.who.replace('@c.us', '')} \n\nHave fun with us✨ \n\n *Group Description* ❤️ \n\n ${det.groupMetadata.desc}`)
+  			await client.sendTextWithMentions(event.chat, `Bienvenido *${det.contact.formattedName}!* \n\n@${event.who.replace('@c.us', '')} \n\nDiviértete con nosotros✨ \n\n *Descripción del Grupo* ❤️ \n\n ${det.groupMetadata.desc}`)
   		} 
 	} catch(err) {
 		console.log(err)
