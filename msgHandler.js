@@ -61,7 +61,7 @@ module.exports = msgHandler = async (client, message) => {
         if (isCmd && !isGroupMsg) console.log(color('[EXEC]'), color(time, 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname))
         if (isCmd && isGroupMsg) console.log(color('[EXEC]'), color(time, 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname), 'in', color(name))
 
-        const owners = ['919744375687@c.us'] // eg [9190xxxxxxxx, 49xxxxxxxx] replace my number also 
+        const owners = ['34605735266'] // eg [9190xxxxxxxx, 49xxxxxxxx] replace my number also 
         const isowner = owners.includes(sender.id) 
 
         msgFilter.addFilter(from)
@@ -86,16 +86,16 @@ module.exports = msgHandler = async (client, message) => {
                            		if (quotedMsg.duration < 15) {
                           		sendSticker.sendAnimatedSticker(quotedMsgObj)
                           		} else {
-                          		await client.reply(from, 'The given file is too large for converting', id)
+                          		await client.reply(from, 'El archivo dado es demasiado grande para convertir', id)
                           		} 
 	                } else {
-                  		client.reply(from, 'You did not tag a picture or video, Baka', message.id)
+                  		client.reply(from, 'No etiquetaste una foto o un video, Baka', message.id)
                     	}
 		break
        case 'toimg':
        	if(!quotedMsg) return client.reply(from, '.', id)
 		else if (quotedMsg && quotedMsg.type == 'video'){
-		return client.reply(from, 'that\'s not a sticker, Baka', id)
+		return client.reply(from, 'eso no es un sticker, Baka', id)
 		} if(quotedMsg) {
 	const mediaData = await decryptMedia(quotedMsg)
 	const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
@@ -103,8 +103,8 @@ module.exports = msgHandler = async (client, message) => {
 		}
 		break
        case 'tts': //You can add as many as you want, just find the language code and modify the code :)
-            if (args.length === 1) return client.reply(from, '  *Usage #tts language text*')
-            const ttsId = require('node-gtts')('id');
+            if (args.length === 1) return client.reply(from, '  *Usa #tts idioma text*')
+            const ttsEs = require('node-gtts')('es');
             const ttsEn = require('node-gtts')('en');
             const ttsPt = require('node-gtts')('pt');
             const ttsJp = require('node-gtts')('ja');
@@ -135,13 +135,13 @@ module.exports = msgHandler = async (client, message) => {
                     client.sendPtt(from, './media/tts/resAr.mp3', id)
                 })
             } else {
-                client.reply(from, 'Language not supported!', id)
+                client.reply(from, 'Idioma no admitido!', id)
             }
             break
         case 'quotemaker':
             arg = body.trim().split('|')
             if (arg.length >= 3) {
-            client.reply(from, 'Processing...', message.id) 
+            client.reply(from, 'Procesando...', message.id) 
             const quotes = arg[1]
             const author = arg[2]
             const theme = arg[3]
@@ -149,10 +149,10 @@ module.exports = msgHandler = async (client, message) => {
             const resolt = await quotemaker(quotes, author, theme)
             client.sendFile(from, resolt, 'quotesmaker.jpg','neh...')
             } catch {
-            client.reply(from, 'I\'m afraid to tell you that the image failed to process', message.id)
+            client.reply(from, 'tengo miedo de decirte que la imagen no se procesó', message.id)
             }
             } else {
-            client.reply(from, 'Usage: \n!quotemaker |text|watermark|theme\n\nEx :\n!quotemaker |...|...|random', message.id)
+            client.reply(from, 'Usa: \n!quotemaker |text|watermark|theme\n\nEx :\n!quotemaker |...|...|random', message.id)
             }
             break
 			    
@@ -189,21 +189,21 @@ module.exports = msgHandler = async (client, message) => {
 ${desc}`)
         break
         case 'bc':
-            if(!isowner) return client.reply(from, 'Only Bot admins!', message.id)
+            if(!isowner) return client.reply(from, 'Solo administradores de Bot!', message.id)
             let msg = body.slice(4)
             const chatz = await client.getAllChatIds()
             for (let ids of chatz) {
                 var cvk = await client.getChatById(ids)
                 if (!cvk.isReadOnly) client.sendText(ids, `[ EWH BOT Broadcast ]\n\n${msg}`)
             }
-            client.reply(from, 'Broadcast Success!', message.id)
+            client.reply(from, 'Éxito de la transmisión!', message.id)
             break
         case 'ban':
-            if(!isowner) return client.reply(from, 'Only Bot admins can use this CMD!', message.id)
+            if(!isowner) return client.reply(from, 'Solo los administradores de Bot pueden usar esto CMD!', message.id)
             for (let i = 0; i < mentionedJidList.length; i++) {
                 ban.push(mentionedJidList[i])
                 fs.writeFileSync('./lib/banned.json', JSON.stringify(ban))
-                client.reply(from, 'Succes ban target!', message.id)
+                client.reply(from, 'Objetivo de prohibición de éxito!', message.id)
             }
             break  		   
         case 'covid':
@@ -219,8 +219,8 @@ ${desc}`)
             break
 			    
         case 'ping':
-            if (!isGroupMsg) return client.reply(from, 'Sorry, This command can only be used in groups', message.id)
-            if (!isGroupAdmins) return client.reply(from, 'Well, only admins can use this command', message.id)
+            if (!isGroupMsg) return client.reply(from, 'Lo sentimos, este comando solo se puede usar en grupos', message.id)
+            if (!isGroupAdmins) return client.reply(from, 'Bueno, solo los administradores pueden usar este comando.', message.id)
             const groupMem = await client.getGroupMembers(groupId)
             let hehe = `${body.slice(6)} - ${pushname} \n`
             for (let i = 0; i < groupMem.length; i++) {
@@ -233,80 +233,80 @@ ${desc}`)
 			    
         case 'kickall':
             const isGroupOwner = sender.id === chat.groupMetadata.owner
-            if(!isGroupOwner) return client.reply(from, 'Sorry, Only group owner can use this CMD', message.id)
-            if (!isGroupMsg) return client.reply(from, 'This command can only be used in groups', message.id)
-            if(!isBotGroupAdmins) return client.reply(from, 'You need to give me the power to do this before executing', message.id)
+            if(!isGroupOwner) return client.reply(from, 'Lo sentimos, solo el dueño del grupo puede usar esto. CMD', message.id)
+            if (!isGroupMsg) return client.reply(from, 'Este comando solo se puede usar en grupos', message.id)
+            if(!isBotGroupAdmins) return client.reply(from, 'Necesitas darme el poder para hacer esto antes de ejecutar', message.id)
             const allMem = await client.getGroupMembers(groupId)
             console.log(isGroupAdmins)
             for (let i = 0; i < allMem.length; i++) {
                 if (groupAdmins.includes(allMem[i].id)) return
                 await client.removeParticipant(groupId, allMem[i].id)
             }
-            client.reply(from, 'Done!', message.id)
+            client.reply(from, 'Ya!', message.id)
             break
 			    
         case 'clearall':
-            if (!isowner) return client.reply(from, 'Owner only', message.id)
+            if (!isowner) return client.reply(from, 'Solo propietario', message.id)
             const allChatz = await client.getAllChats()
             for (let dchat of allChatz) {
                 await client.deleteChat(dchat.id)
             }
-            client.reply(from, 'Done', message.id)
+            client.reply(from, 'Ya', message.id)
             break
 			    
         case 'act':
              arg = body.trim().split(' ')
-             if (!isGroupAdmins) return client.reply(from, 'Only Admins can use this command, Baka >.<', id)
+             if (!isGroupAdmins) return client.reply(from, 'Solo los administradores pueden usar este comando, Baka >.<', id)
              		if (arg[1].toLowerCase() == 'welcome') {
 	     			if (wel.includes(chat.id)) {
-	       				client.reply(from, `Welcome is already registered on *${name}*`, message.id)
+	       				client.reply(from, `Bienvenido ya está registrado en *${name}*`, message.id)
 	     			} else {
                				wel.push(chat.id)
                 			fs.writeFileSync('./lib/welcome.json', JSON.stringify(wel))
-                			client.reply(from, `Welcome is now registered on *${name}*`, message.id)
+                			client.reply(from, `Bienvenido ahora está registrado en *${name}*`, message.id)
 	     			}
              		} else if (arg[1].toLowerCase() == 'nsfw') {
 	       			if (nsfwgrp.includes(chat.id)) {
-				client.reply(from, `NSFW is already registered on *${name}*`, message.id)
+				client.reply(from, `NSFW ya está registrado en *${name}*`, message.id)
 	     			} else {
                 		nsfwgrp.push(chat.id)
                 		fs.writeFileSync('./lib/nsfw.json', JSON.stringify(nsfwgrp))
-                		client.reply(from, `NSFW is now registered on *${name}*`, message.id)
+                		client.reply(from, `NSFW ahora está registrado en *${name}*`, message.id)
 				}
 			} else if (arg[1].toLowerCase() == 'rule') {
-				if (!isBotGroupAdmins) return client.reply(from, 'You need to make me admin to use this CMD', message.id)
+				if (!isBotGroupAdmins) return client.reply(from, 'Necesitas hacerme administrador para usar este CMD', message.id)
 				if (ruleArr.includes(chat.id)) {
-					 client.reply(from, `Rule is already registered on *${name}*`, message.id)
+					 client.reply(from, `La regla ya está registrada en *${name}*`, message.id)
 				} else {
                 			ruleArr.push(chat.id)
                 			fs.writeFileSync('./lib/rule.json', JSON.stringify(ruleArr))
-                			client.reply(from, `Rule is now registered on *${name}*`, message.id)
+                			client.reply(from, `La regla ahora está registrada en *${name}*`, message.id)
              			}
 			}
              break
         case 'deact':
              arg = body.trim().split(' ')
-             if (!isGroupAdmins) return client.reply(from, 'Only Admins can use this command, Baka >.<', id)
+             if (!isGroupAdmins) return client.reply(from, 'Solo los administradores pueden usar este comando, Baka >.<', id)
              if (arg[1].toLowerCase() == 'welcome') {
                 let inx = ban.indexOf(from)
                 wel.splice(inx, 1)
                 fs.writeFileSync('./lib/welcome.json', JSON.stringify(wel))
-                client.reply(from, `Welcome is now unregistered on *${name}*`, message.id)
+                client.reply(from, `Bienvenida ahora no está registrado en *${name}*`, message.id)
              } else if (arg[1].toLowerCase() == 'nsfw') {
                 let inx = ban.indexOf(from)
                 nsfwgrp.splice(inx, 1)
                 fs.writeFileSync('./lib/nsfw.json', JSON.stringify(nsfwgrp))
-                client.reply(from, `NSFW is now unregistered on *${name}*`, message.id)
+                client.reply(from, `NSFW ahora no está registrado en *${name}*`, message.id)
              } else if (arg[1].toLowerCase() == 'pokegame') {
                 let inx = pokarr.indexOf(from)
                 pokarr.splice(inx, 1)
                 fs.writeFileSync('./lib/poke.json', JSON.stringify(pokarr))
-                client.reply(from, `PokeGame is now unregistered on *${name}*`, message.id)
+                client.reply(from, `PokeGame ahora no está registrado en *${name}*`, message.id)
              } else if (arg[1].toLowerCase() == 'rule') {
                 let inx = ruleArr.indexOf(from)
                 ruleArr.splice(inx, 1)
                 fs.writeFileSync('./lib/rule.json', JSON.stringify(ruleArr))
-                client.reply(from, `Rule is now unregistered on *${name}*`, message.id)
+                client.reply(from, `Rule ahora no está registrado en *${name}*`, message.id)
              }      
              break
 			    
@@ -314,7 +314,7 @@ ${desc}`)
             arg = body.trim().split(' ')
             const gcname = arg[1]
             client.createGroup(gcname, mentionedJidList)
-            client.sendText(from, 'Group Created ✨️')
+            client.sendText(from, 'Grupo creado ✨️')
             break
        
         case 'sr':
@@ -336,76 +336,76 @@ ${desc}`)
                       if ((isGroupMsg) && (isnsfw)) {
                                 await client.sendFileFromUrl(from, `${url}`, 'Reddit.jpg', `${title}` + '\n\nPostlink:' + `${postLink}`)
                       } else if ((isGroupMsg) && (!isnsfw)) {
-                                await client.reply(from, `NSFW is not registered on *${name}*`, id)
+                                await client.reply(from, `NSFW no está registrado en *${name}*`, id)
                       }
                 } else { 
                       await client.sendFileFromUrl(from, `${url}`, 'Reddit.jpg', `${title}` + '\n\nPostlink:' + `${postLink}`)
                 }
                 } catch(err) {
                     console.log(err)
-                    await client.reply(from, 'There is no such subreddit, Baka!', id) 
+                    await client.reply(from, 'No existe tal subreddit, Baka!', id) 
                 }
                 break
         case 'unban':
-            if(!isowner) return client.reply(from, 'Only bot admins can use this CMD', message.id)
+            if(!isowner) return client.reply(from, 'Solo los administradores de bot pueden usar este CMD', message.id)
             let inx = ban.indexOf(mentionedJidList[0])
             ban.splice(inx, 1)
             fs.writeFileSync('./lib/banned.json', JSON.stringify(ban))
-            client.reply(from, 'Unbanned User!', message.id)
+            client.reply(from, 'Usuario no prohibido!', message.id)
             break
         case 'kick':
             if(!isGroupMsg) return client.reply(from, '...', message.id)
-            if(!isGroupAdmins) return client.reply(from, 'You are not an admin, Sorry', message.id)
-            if(!isBotGroupAdmins) return client.reply(from, 'You need to make me admin to use this CMD', message.id)
-            if(mentionedJidList.length === 0) return client.reply(from, 'Wrong format', message.id)
-            await client.sendText(from, `Request Accepted! issued:\n${mentionedJidList.join('\n')}`)
+            if(!isGroupAdmins) return client.reply(from, 'No eres administrador, lo siento', message.id)
+            if(!isBotGroupAdmins) return client.reply(from, 'Necesitas hacerme administrador para usar esto CMD', message.id)
+            if(mentionedJidList.length === 0) return client.reply(from, 'Formato erróneo', message.id)
+            await client.sendText(from, `Petición aceptada! emitido:\n${mentionedJidList.join('\n')}`)
             for (let i = 0; i < mentionedJidList.length; i++) {
                 if (groupAdmins.includes(mentionedJidList[i])) return await client.reply(from, '....', message.id)
                 await client.removeParticipant(groupId, mentionedJidList[i])
             }
             break
         case 'delete':
-            if (!isGroupAdmins) return client.reply(from, 'Only admins can use this command', id)
-            if (!quotedMsg) return client.reply(from, 'Wrong Format!', id)
-            if (!quotedMsgObj.fromMe) return client.reply(from, 'Wrong Format!', id)
+            if (!isGroupAdmins) return client.reply(from, 'Solo los administradores pueden usar este comando', id)
+            if (!quotedMsg) return client.reply(from, 'Formato erróneo!', id)
+            if (!quotedMsgObj.fromMe) return client.reply(from, 'Formato erróneo!', id)
             client.deleteMessage(quotedMsgObj.chatId, quotedMsgObj.id, false)
             break
         case 'leave':
             if(!isGroupMsg) return client.reply(from, '...', message.id)
-            if(!isGroupAdmins) return client.reply(from, 'You are not an admin', message.id)
+            if(!isGroupAdmins) return client.reply(from, 'No eres un administrador', message.id)
             await client.sendText(from,'Sayonara').then(() => client.leaveGroup(groupId))
             break
         case 'promote':
             if(!isGroupMsg) return client.reply(from, '.', message.id)
-            if(!isGroupAdmins) return client.reply(from, 'You are not an admin', message.id)
-            if(!isBotGroupAdmins) return client.reply(from, 'You need to make me admin to use this CMD', message.id)
-            if (mentionedJidList.length === 0) return await client.reply(from, 'Wrong format!', message.id)
-            if (mentionedJidList.length >= 2) return await client.reply(from, 'One user at a time', message.id)
-            if (groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'This user is already admin', message.id)
+            if(!isGroupAdmins) return client.reply(from, 'No eres un administrador', message.id)
+            if(!isBotGroupAdmins) return client.reply(from, 'Necesitas hacerme administrador para usar este CMD', message.id)
+            if (mentionedJidList.length === 0) return await client.reply(from, 'Formato erróneo!', message.id)
+            if (mentionedJidList.length >= 2) return await client.reply(from, 'Un usuario a la vez', message.id)
+            if (groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Este usuario ya es administrador', message.id)
             await client.promoteParticipant(groupId, mentionedJidList[0])
-            await client.sendTextWithMentions(from, `@${mentionedJidList[0].replace('@c.us', '')} is now an admin`)
+            await client.sendTextWithMentions(from, `@${mentionedJidList[0].replace('@c.us', '')} ahora es administrador`)
             break
         case 'demote':
-            if(!isGroupAdmins) return client.reply(from, 'You are not an admin', message.id)
-            if(!isBotGroupAdmins) return client.reply(from, 'You need to make me admin to use this CMD', message.id)
-            if (mentionedJidList.length === 0) return client.reply(from, 'Wrong Format', message.id)
-            if (mentionedJidList.length >= 2) return await client.reply(from, 'One user at a time', message.id)
-            if (!groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'The user isn\'t an admin', message.id)
+            if(!isGroupAdmins) return client.reply(from, 'No eres un administrador', message.id)
+            if(!isBotGroupAdmins) return client.reply(from, 'Necesitas hacerme administrador para usar este CMD', message.id)
+            if (mentionedJidList.length === 0) return client.reply(from, 'Formato erróneo', message.id)
+            if (mentionedJidList.length >= 2) return await client.reply(from, 'Un usuario a la vez', message.id)
+            if (!groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'El usuario no es un administrador', message.id)
             await client.demoteParticipant(groupId, mentionedJidList[0])
             await client.sendTextWithMentions(from, `Demoted @${mentionedJidList[0].replace('@c.us', '')}.`)
             break
         case 'join':
-            if (args.length == 0) return client.reply(from, 'Wrong Format', message.id)
+            if (args.length == 0) return client.reply(from, 'Formato erróneo', message.id)
             const link = body.slice(6)
             const minMem = 30
             const isLink = link.match(/(https:\/\/chat.whatsapp.com)/gi)
             const check = await client.inviteInfo(link)
-            if (!isLink) return client.reply(from, 'Where\'s the link?', message.id)
-            if (check.size < minMem) return client.reply(from, 'The group does not have 30+ members', message.id)
+            if (!isLink) return client.reply(from, 'Dónde está el enlace??', message.id)
+            if (check.size < minMem) return client.reply(from, 'El grupo no tiene más de 30 miembros', message.id)
             await client.joinGroupViaLink(link).then( async () => {
-                await client.reply(from, '*Joined* ✨️', message.id)
+                await client.reply(from, '*Unido* ✨️', message.id)
             }).catch(error => {
-                client.reply(from, 'An error occured 💔️', message.id)
+                client.reply(from, 'Ocurrió un error 💔️', message.id)
             })
             break
         case 'sauce':
@@ -416,7 +416,7 @@ ${desc}`)
                  await fs.writeFile(filename, buffer)
                  await source.sauce(filename, message)
                  } else { 
-                 client.reply(from, 'Only Images are supported', id)
+                 client.reply(from, 'Solo se admiten imágenes', id)
                  }
              } else if (quotedMsg && quotedMsg.type == 'image') {
                  const buffer = await decryptMedia(quotedMsg, uaOverride)
@@ -424,12 +424,12 @@ ${desc}`)
                  await fs.writeFile(filename, buffer)
                  await source.sauce(filename, quotedMsgObj)
              } else { 
-                 client.reply(from, 'Only Images are supported', id)
+                 client.reply(from, 'Solo se admiten imágenes', id)
              }
              break
 			    
         case 'lyrics':
-            if (args.length == 0) return client.reply(from, 'Wrong Format', message.id)
+            if (args.length == 0) return client.reply(from, 'Formato erróneo', message.id)
             const lagu = body.slice(7)
             console.log(lagu)
             const lirik = await liriklagu(lagu)
@@ -443,12 +443,12 @@ ${desc}`)
             )
             const parsed = await data.json()
             if (!parsed) {
-              await client.sendFileFromUrl(from, errorurl2, 'error.png', '💔️ Sorry, Couldn\'t find the requested anime', id)
-              console.log("Sent!")
+              await client.sendFileFromUrl(from, errorurl2, 'error.png', '💔️ Lo siento, no se pudo encontrar el anime solicitado', id)
+              console.log("Expedido!")
               return null
               }
             const { title, synopsis, episodes, url, rated, score, image_url } = parsed.results[0]
-            const content = `*Anime Found!*
+            const content = `*Anime encontrado!*
 ✨️ *Title:* ${title}
 
 🎆️ *Episodes:* ${episodes}
@@ -466,7 +466,7 @@ ${desc}`)
             client.sendImage(from, base64, title, content)
            } catch (err) {
              console.error(err.message)
-             await client.sendFileFromUrl(from, errorurl2, 'error.png', '💔️ Sorry, Couldn\'t find the requested anime')
+             await client.sendFileFromUrl(from, errorurl2, 'error.png', '💔️ Lo siento, no se pudo encontrar el anime solicitado')
            }
           break
 	case 'manga':
@@ -477,12 +477,12 @@ ${desc}`)
             )
             const parsed = await data.json()
             if (!parsed) {
-              await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Sorry, Couldn\'t find the requested manga', id)
+              await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Lo siento, no se pudo encontrar el manga solicitado', id)
               console.log("Sent!")
               return null
               }
             const { title, synopsis, chapters, url, volumes, score, image_url } = parsed.results[0]
-            const content = `*Manga found*
+            const content = `*Manga encontrado*
 
 *Title:* ${title}
 
@@ -501,7 +501,7 @@ ${desc}`)
             client.sendImage(from, base64, title, content)
            } catch (err) {
              console.error(err.message)
-             await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Sorry, Couldn\'t find the requested manga')
+             await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Lo siento, no se pudo encontrar el manga solicitado')
            }
           break
 		  
@@ -513,12 +513,12 @@ ${desc}`)
             )
             const parsed = await data.json()
             if (!parsed) {
-              await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Sorry, Couldn\'t find the requested character', id)
+              await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Lo siento, no se pudo encontrar el personaje solicitado', id)
               console.log("Sent!")
               return null
               }
             const { name, alternative_names, url, image_url } = parsed.results[0]
-            const content = `*Character found!*
+            const content = `*Personaje encontrado!*
 
 *Name:* ${name}
 
@@ -531,18 +531,18 @@ ${desc}`)
             client.sendImage(from, base64, name, content)
            } catch (err) {
              console.error(err.message)
-             await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Sorry, Couldn\'t find the requested character')
+             await client.sendFileFromUrl(from, errorurl2, 'error.png', 'Lo siento, no se pudo encontrar el personaje solicitado')
            }
           break
         case 'wallpaper':
-            if (args.length == 0) return client.reply(from, 'Wrong Format!', id)
+            if (args.length == 0) return client.reply(from, 'Formato erróneo!', id)
             const query = body.slice(6)
             const walls = await wall(query)
             await client.sendFileFromUrl(from, walls, 'walls.jpg', '', id)
 	    break
         case 'haigusha': 
         	const waifu = await waifuclient.getRandom()
-        	await sclient.sendFileFromUrl(message.from, waifu.data.display_picture, 'haugusha.jpg', `❤️ *Name : ${waifu.data.name}*\n\n💎️ Description : ${waifu.data.description}\n\n💚️ Source : ${waifu.data.series.name}\n\n✨️ URL: ${waifu.data.url}`, message.id)
+        	await sclient.sendFileFromUrl(message.from, waifu.data.display_picture, 'haugusha.jpg', `❤️ *Name : ${waifu.data.name}*\n\n💎️ Descripcion : ${waifu.data.description}\n\n💚️ Source : ${waifu.data.series.name}\n\n✨️ URL: ${waifu.data.url}`, message.id)
             break
         case 'animeneko':
             client.sendFileFromUrl(from, akaneko.neko(), 'neko.jpg', 'Neko *Nyaa*~')
@@ -578,20 +578,20 @@ ${desc}`)
         case 'pokemon':
             arg = body.trim().split(' ')
             if (arg.length < 2) {
-            client.reply(from, 'Give me a pokemon name, Baka!', id)
+            client.reply(from, 'Dame un nombre de pokemon, Baka!', id)
 	    } else {
 		if (pkarrs.includes(body.slice(9).toLowerCase())) {
             const pokedta = await pokefunc.pkmzdata(body.slice(9).toLowerCase())
 	    await client.sendFileFromUrl(from, pokedta.url, 'pkmn.png',pokedta.data, id)
                 } else {
-		client.reply(from, `No such pokemon (${body.slice(9).toLowerCase()})`, id)
+		client.reply(from, `No hay tal pokemon (${body.slice(9).toLowerCase()})`, id)
 		}
 	    }
 	    break
         case 'rpaper' :
             const walnime = ['https://cdn.nekos.life/wallpaper/QwGLg4oFkfY.png','https://cdn.nekos.life/wallpaper/bUzSjcYxZxQ.jpg','https://cdn.nekos.life/wallpaper/j49zxzaUcjQ.jpg','https://cdn.nekos.life/wallpaper/YLTH5KuvGX8.png','https://cdn.nekos.life/wallpaper/Xi6Edg133m8.jpg','https://cdn.nekos.life/wallpaper/qvahUaFIgUY.png','https://cdn.nekos.life/wallpaper/leC8q3u8BSk.jpg','https://cdn.nekos.life/wallpaper/tSUw8s04Zy0.jpg','https://cdn.nekos.life/wallpaper/sqsj3sS6EJE.png','https://cdn.nekos.life/wallpaper/HmjdX_s4PU4.png','https://cdn.nekos.life/wallpaper/Oe2lKgLqEXY.jpg','https://cdn.nekos.life/wallpaper/GTwbUYI-xTc.jpg','https://cdn.nekos.life/wallpaper/nn_nA8wTeP0.png','https://cdn.nekos.life/wallpaper/Q63o6v-UUa8.png','https://cdn.nekos.life/wallpaper/ZXLFm05K16Q.jpg','https://cdn.nekos.life/wallpaper/cwl_1tuUPuQ.png','https://cdn.nekos.life/wallpaper/wWhtfdbfAgM.jpg','https://cdn.nekos.life/wallpaper/3pj0Xy84cPg.jpg','https://cdn.nekos.life/wallpaper/sBoo8_j3fkI.jpg','https://cdn.nekos.life/wallpaper/gCUl_TVizsY.png','https://cdn.nekos.life/wallpaper/LmTi1k9REW8.jpg','https://cdn.nekos.life/wallpaper/sbq_4WW2PUM.jpg','https://cdn.nekos.life/wallpaper/QOSUXEbzDQA.png','https://cdn.nekos.life/wallpaper/khaqGIHsiqk.jpg','https://cdn.nekos.life/wallpaper/iFtEXugqQgA.png','https://cdn.nekos.life/wallpaper/deFKIDdRe1I.jpg','https://cdn.nekos.life/wallpaper/OHZVtvDm0gk.jpg','https://cdn.nekos.life/wallpaper/YZYa00Hp2mk.jpg','https://cdn.nekos.life/wallpaper/R8nPIKQKo9g.png','https://cdn.nekos.life/wallpaper/_brn3qpRBEE.jpg','https://cdn.nekos.life/wallpaper/ADTEQdaHhFI.png','https://cdn.nekos.life/wallpaper/MGvWl6om-Fw.jpg','https://cdn.nekos.life/wallpaper/YGmpjZW3AoQ.jpg','https://cdn.nekos.life/wallpaper/hNCgoY-mQPI.jpg','https://cdn.nekos.life/wallpaper/3db40hylKs8.png','https://cdn.nekos.life/wallpaper/iQ2FSo5nCF8.jpg','https://cdn.nekos.life/wallpaper/meaSEfeq9QM.png','https://cdn.nekos.life/wallpaper/CmEmn79xnZU.jpg','https://cdn.nekos.life/wallpaper/MAL18nB-yBI.jpg','https://cdn.nekos.life/wallpaper/FUuBi2xODuI.jpg','https://cdn.nekos.life/wallpaper/ez-vNNuk6Ck.jpg','https://cdn.nekos.life/wallpaper/K4-z0Bc0Vpc.jpg','https://cdn.nekos.life/wallpaper/Y4JMbswrNg8.jpg','https://cdn.nekos.life/wallpaper/ffbPXIxt4-0.png','https://cdn.nekos.life/wallpaper/x63h_W8KFL8.jpg','https://cdn.nekos.life/wallpaper/lktzjDRhWyg.jpg','https://cdn.nekos.life/wallpaper/j7oQtvRZBOI.jpg','https://cdn.nekos.life/wallpaper/MQQEAD7TUpQ.png','https://cdn.nekos.life/wallpaper/lEG1-Eeva6Y.png','https://cdn.nekos.life/wallpaper/Loh5wf0O5Aw.png','https://cdn.nekos.life/wallpaper/yO6ioREenLA.png','https://cdn.nekos.life/wallpaper/4vKWTVgMNDc.jpg','https://cdn.nekos.life/wallpaper/Yk22OErU8eg.png','https://cdn.nekos.life/wallpaper/Y5uf1hsnufE.png','https://cdn.nekos.life/wallpaper/xAmBpMUd2Zw.jpg','https://cdn.nekos.life/wallpaper/f_RWFoWciRE.jpg','https://cdn.nekos.life/wallpaper/Y9qjP2Y__PA.jpg','https://cdn.nekos.life/wallpaper/eqEzgohpPwc.jpg','https://cdn.nekos.life/wallpaper/s1MBos_ZGWo.jpg','https://cdn.nekos.life/wallpaper/PtW0or_Pa9c.png','https://cdn.nekos.life/wallpaper/32EAswpy3M8.png','https://cdn.nekos.life/wallpaper/Z6eJZf5xhcE.png','https://cdn.nekos.life/wallpaper/xdiSF731IFY.jpg','https://cdn.nekos.life/wallpaper/Y9r9trNYadY.png','https://cdn.nekos.life/wallpaper/8bH8CXn-sOg.jpg','https://cdn.nekos.life/wallpaper/a02DmIFzRBE.png','https://cdn.nekos.life/wallpaper/MnrbXcPa7Oo.png','https://cdn.nekos.life/wallpaper/s1Tc9xnugDk.jpg','https://cdn.nekos.life/wallpaper/zRqEx2gnfmg.jpg','https://cdn.nekos.life/wallpaper/PtW0or_Pa9c.png','https://cdn.nekos.life/wallpaper/0ECCRW9soHM.jpg','https://cdn.nekos.life/wallpaper/kAw8QHl_wbM.jpg','https://cdn.nekos.life/wallpaper/ZXcaFmpOlLk.jpg','https://cdn.nekos.life/wallpaper/WVEdi9Ng8UE.png','https://cdn.nekos.life/wallpaper/IRu29rNgcYU.png','https://cdn.nekos.life/wallpaper/LgIJ_1AL3rM.jpg','https://cdn.nekos.life/wallpaper/DVD5_fLJEZA.jpg','https://cdn.nekos.life/wallpaper/siqOQ7k8qqk.jpg','https://cdn.nekos.life/wallpaper/CXNX_15eGEQ.png','https://cdn.nekos.life/wallpaper/s62tGjOTHnk.jpg','https://cdn.nekos.life/wallpaper/tmQ5ce6EfJE.png','https://cdn.nekos.life/wallpaper/Zju7qlBMcQ4.jpg','https://cdn.nekos.life/wallpaper/CPOc_bMAh2Q.png','https://cdn.nekos.life/wallpaper/Ew57S1KtqsY.jpg','https://cdn.nekos.life/wallpaper/hVpFbYJmZZc.jpg','https://cdn.nekos.life/wallpaper/sb9_J28pftY.jpg','https://cdn.nekos.life/wallpaper/JDoIi_IOB04.jpg','https://cdn.nekos.life/wallpaper/rG76AaUZXzk.jpg','https://cdn.nekos.life/wallpaper/9ru2luBo360.png','https://cdn.nekos.life/wallpaper/ghCgiWFxGwY.png','https://cdn.nekos.life/wallpaper/OSR-i-Rh7ZY.png','https://cdn.nekos.life/wallpaper/65VgtPyweCc.jpg','https://cdn.nekos.life/wallpaper/3vn-0FkNSbM.jpg','https://cdn.nekos.life/wallpaper/u02Y0-AJPL0.jpg','https://cdn.nekos.life/wallpaper/_-Z-0fGflRc.jpg','https://cdn.nekos.life/wallpaper/3VjNKqEPp58.jpg','https://cdn.nekos.life/wallpaper/NoG4lKnk6Sc.jpg','https://cdn.nekos.life/wallpaper/xiTxgRMA_IA.jpg','https://cdn.nekos.life/wallpaper/yq1ZswdOGpg.png','https://cdn.nekos.life/wallpaper/4SUxw4M3UMA.png','https://cdn.nekos.life/wallpaper/cUPnQOHNLg0.jpg','https://cdn.nekos.life/wallpaper/zczjuLWRisA.jpg','https://cdn.nekos.life/wallpaper/TcxvU_diaC0.png','https://cdn.nekos.life/wallpaper/7qqWhEF_uoY.jpg','https://cdn.nekos.life/wallpaper/J4t_7DvoUZw.jpg','https://cdn.nekos.life/wallpaper/xQ1Pg5D6J4U.jpg','https://cdn.nekos.life/wallpaper/aIMK5Ir4xho.jpg','https://cdn.nekos.life/wallpaper/6gneEXrNAWU.jpg','https://cdn.nekos.life/wallpaper/PSvNdoISWF8.jpg','https://cdn.nekos.life/wallpaper/SjgF2-iOmV8.jpg','https://cdn.nekos.life/wallpaper/vU54ikOVY98.jpg','https://cdn.nekos.life/wallpaper/QjnfRwkRU-Q.jpg','https://cdn.nekos.life/wallpaper/uSKqzz6ZdXc.png','https://cdn.nekos.life/wallpaper/AMrcxZOnVBE.jpg','https://cdn.nekos.life/wallpaper/N1l8SCMxamE.jpg','https://cdn.nekos.life/wallpaper/n2cBaTo-J50.png','https://cdn.nekos.life/wallpaper/ZXcaFmpOlLk.jpg','https://cdn.nekos.life/wallpaper/7bwxy3elI7o.png','https://cdn.nekos.life/wallpaper/7VW4HwF6LcM.jpg','https://cdn.nekos.life/wallpaper/YtrPAWul1Ug.png','https://cdn.nekos.life/wallpaper/1p4_Mmq95Ro.jpg','https://cdn.nekos.life/wallpaper/EY5qz5iebJw.png','https://cdn.nekos.life/wallpaper/aVDS6iEAIfw.jpg','https://cdn.nekos.life/wallpaper/veg_xpHQfjE.jpg','https://cdn.nekos.life/wallpaper/meaSEfeq9QM.png','https://cdn.nekos.life/wallpaper/Xa_GtsKsy-s.png','https://cdn.nekos.life/wallpaper/6Bx8R6D75eM.png','https://cdn.nekos.life/wallpaper/zXOGXH_b8VY.png','https://cdn.nekos.life/wallpaper/VQcviMxoQ00.png','https://cdn.nekos.life/wallpaper/CJnRl-PKWe8.png','https://cdn.nekos.life/wallpaper/zEWYfFL_Ero.png','https://cdn.nekos.life/wallpaper/_C9Uc5MPaz4.png','https://cdn.nekos.life/wallpaper/zskxNqNXyG0.jpg','https://cdn.nekos.life/wallpaper/g7w14PjzzcQ.jpg','https://cdn.nekos.life/wallpaper/KavYXR_GRB4.jpg','https://cdn.nekos.life/wallpaper/Z_r9WItzJBc.jpg','https://cdn.nekos.life/wallpaper/Qps-0JD6834.jpg','https://cdn.nekos.life/wallpaper/Ri3CiJIJ6M8.png','https://cdn.nekos.life/wallpaper/ArGYIpJwehY.jpg','https://cdn.nekos.life/wallpaper/uqYKeYM5h8w.jpg','https://cdn.nekos.life/wallpaper/h9cahfuKsRg.jpg','https://cdn.nekos.life/wallpaper/iNPWKO8d2a4.jpg','https://cdn.nekos.life/wallpaper/j2KoFVhsNig.jpg','https://cdn.nekos.life/wallpaper/z5Nc-aS6QJ4.jpg','https://cdn.nekos.life/wallpaper/VUFoK8l1qs0.png','https://cdn.nekos.life/wallpaper/rQ8eYh5mXN8.png','https://cdn.nekos.life/wallpaper/D3NxNISDavQ.png','https://cdn.nekos.life/wallpaper/Z_CiozIenrU.jpg','https://cdn.nekos.life/wallpaper/np8rpfZflWE.jpg','https://cdn.nekos.life/wallpaper/ED-fgS09gik.jpg','https://cdn.nekos.life/wallpaper/AB0Cwfs1X2w.jpg','https://cdn.nekos.life/wallpaper/DZBcYfHouiI.jpg','https://cdn.nekos.life/wallpaper/lC7pB-GRAcQ.png','https://cdn.nekos.life/wallpaper/zrI-sBSt2zE.png','https://cdn.nekos.life/wallpaper/_RJhylwaCLk.jpg','https://cdn.nekos.life/wallpaper/6km5m_GGIuw.png','https://cdn.nekos.life/wallpaper/3db40hylKs8.png','https://cdn.nekos.life/wallpaper/oggceF06ONQ.jpg','https://cdn.nekos.life/wallpaper/ELdH2W5pQGo.jpg','https://cdn.nekos.life/wallpaper/Zun_n5pTMRE.png','https://cdn.nekos.life/wallpaper/VqhFKG5U15c.png','https://cdn.nekos.life/wallpaper/NsMoiW8JZ60.jpg','https://cdn.nekos.life/wallpaper/XE4iXbw__Us.png','https://cdn.nekos.life/wallpaper/a9yXhS2zbhU.jpg','https://cdn.nekos.life/wallpaper/jjnd31_3Ic8.jpg','https://cdn.nekos.life/wallpaper/Nxanxa-xO3s.png','https://cdn.nekos.life/wallpaper/dBHlPcbuDc4.jpg','https://cdn.nekos.life/wallpaper/6wUZIavGVQU.jpg','https://cdn.nekos.life/wallpaper/_-Z-0fGflRc.jpg','https://cdn.nekos.life/wallpaper/H9OUpIrF4gU.jpg','https://cdn.nekos.life/wallpaper/xlRdH3fBMz4.jpg','https://cdn.nekos.life/wallpaper/7IzUIeaae9o.jpg','https://cdn.nekos.life/wallpaper/FZCVL6PyWq0.jpg','https://cdn.nekos.life/wallpaper/5dG-HH6d0yw.png','https://cdn.nekos.life/wallpaper/ddxyA37HiwE.png','https://cdn.nekos.life/wallpaper/I0oj_jdCD4k.jpg','https://cdn.nekos.life/wallpaper/ABchTV97_Ts.png','https://cdn.nekos.life/wallpaper/58C37kkq39Y.png','https://cdn.nekos.life/wallpaper/HMS5mK7WSGA.jpg','https://cdn.nekos.life/wallpaper/1O3Yul9ojS8.jpg','https://cdn.nekos.life/wallpaper/hdZI1XsYWYY.jpg','https://cdn.nekos.life/wallpaper/h8pAJJnBXZo.png','https://cdn.nekos.life/wallpaper/apO9K9JIUp8.jpg','https://cdn.nekos.life/wallpaper/p8f8IY_2mwg.jpg','https://cdn.nekos.life/wallpaper/HY1WIB2r_cE.jpg','https://cdn.nekos.life/wallpaper/u02Y0-AJPL0.jpg','https://cdn.nekos.life/wallpaper/jzN74LcnwE8.png','https://cdn.nekos.life/wallpaper/IeAXo5nJhjw.jpg','https://cdn.nekos.life/wallpaper/7lgPyU5fuLY.jpg','https://cdn.nekos.life/wallpaper/f8SkRWzXVxk.png','https://cdn.nekos.life/wallpaper/ZmDTpGGeMR8.jpg','https://cdn.nekos.life/wallpaper/AMrcxZOnVBE.jpg','https://cdn.nekos.life/wallpaper/ZhP-f8Icmjs.jpg','https://cdn.nekos.life/wallpaper/7FyUHX3fE2o.jpg','https://cdn.nekos.life/wallpaper/CZoSLK-5ng8.png','https://cdn.nekos.life/wallpaper/pSNDyxP8l3c.png','https://cdn.nekos.life/wallpaper/AhYGHF6Fpck.jpg','https://cdn.nekos.life/wallpaper/ic6xRRptRes.jpg','https://cdn.nekos.life/wallpaper/89MQq6KaggI.png','https://cdn.nekos.life/wallpaper/y1DlFeHHTEE.png']
             let walnimek = walnime[Math.floor(Math.random() * walnime.length)]
-            client.sendFileFromUrl(from, walnimek, 'Nimek.jpg', '', message.id)
+            client.sendFileFromUrl(from, walnimek, 'Nimek.jpg', 'hentai', message.id)
             break
         case 'meme':
             const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
