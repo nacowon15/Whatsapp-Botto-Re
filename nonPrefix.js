@@ -3,8 +3,8 @@ async function msg(message, color, p, time) {
 	if (message.type == 'chat') {
 		const text = message.body.toLowerCase() 
 		switch (true) {
-			case text.startsWith('an error'): 
-				 sclient.reply(message.from, 'Link!', message.id)
+			case text.startsWith('error'): 
+				 sclient.reply(message.from, 'chupame la pija', message.id)
 				 break
 			case text.startsWith('omae wa mou shindeiru'): 
 				return sclient.reply(message.from, 'NANI!!', message.id)
@@ -15,7 +15,7 @@ async function msg(message, color, p, time) {
 			case text.startsWith('creador'): 
 				return sclient.reply(message.from, 'Manda mensaje solo si es algo importante +34605735266', message.id)
 				break
-			case text.startsWith('AiramM'): 
+			case text.startsWith('airam'): 
 				return sclient.reply(message.from, 'AiramMariconMaricon!!', message.id)
 				break
 		       /* eg case text.startsWith('your text'): 
